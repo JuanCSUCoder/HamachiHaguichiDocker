@@ -1,48 +1,24 @@
-FROM gfjardim/hamachi
+FROM ubuntu:xenial
 
-# Install dependencies
+# Update Packages and Dependencies
 RUN apt update
-RUN apt install -y gtk-sharp2
-RUN apt install -y build-essential
-RUN apt install -y gettext
-RUN apt install -y cmake
-RUN apt install -y valac
-RUN apt install -y libglib2.0-dev
-RUN apt install -y libgtk-3-dev
-RUN apt install -y libnotify-dev
-RUN apt install -y mono-gmcs
-RUN apt install -y libnotify-bin
-RUN apt install -y monodoc-notify-sharp-manual
-RUN apt install -y libnotify-cil-dev
-RUN apt install -y libgconf2.0-cil
 RUN apt upgrade -y
-RUN apt install -y libglade2.0-cil-dev
-RUN apt install -y gnome-sharp2
-RUN apt install -y dbus
-RUN apt install -y libndesk-dbus-glib1.0-cil-dev
+RUN apt install -y software-properties-common
 
-# Download Haguichi
-ADD https://launchpad.net/haguichi/1.0/1.0.23/+download/haguichi-1.0.23-clr4.0.tar.gz /haguichi/haguichi-1.0.23-clr4.0.tar.gz
-RUN mkdir /haguichi/builder
-RUN tar -xf /haguichi/haguichi-1.0.23-clr4.0.tar.gz -C /haguichi/builder/
+# Hamachi Instalation
+RUN mkdir /hamachi
+ADD https://www.vpn.net/installers/logmein-hamachi_2.1.0.203-1_amd64.deb /hamachi/logmein-hamachi_2.1.0.203-1_amd64.deb
+WORKDIR /hamachi/
+RUN dpkg -i logmein-hamachi_2.1.0.203-1_amd64.deb
 
-# Build Old Haguichi Version
-RUN mkdir /haguichi/builder/haguichi-1.0.23/build
-WORKDIR /haguichi/builder/haguichi-1.0.23/
-RUN ./configure
-RUN make
+# Haguichi Installation
+RUN add-apt-repository -y ppa:webupd8team/haguichi
+RUN apt update
+RUN apt install -y haguichi
 
-# Verify
-RUN make check
+# Add entrypoint.sh and Set Permissions
+COPY entrypoint.sh /hamachi/entrypoint.sh
+RUN chmod a+x /hamachi/entrypoint.sh
 
-# Install Haguichi
-RUN make install
-
-# Clean Installation
-RUN make clean
-
-# Copy Haguichi startup script
-COPY startup.sh /etc/my_init.d/startup.sh
-
-# Chack copied file. TODO: Remove this
-RUN cat /etc/my_init.d/startup.sh
+ENTRYPOINT [ "/hamachi/entrypoint.sh" ]
+CMD [ "haguichi" ]
