@@ -16,6 +16,9 @@ RUN add-apt-repository -y ppa:webupd8team/haguichi
 RUN apt update
 RUN apt install -y haguichi
 
+# Configure Haguichi
+RUN echo Ipc.User $USER >> /var/lib/logmein-hamachi/h2-engine-override.cfg
+
 # Add entrypoint.sh and Set Permissions
 COPY entrypoint.sh /hamachi/entrypoint.sh
 RUN chmod a+x /hamachi/entrypoint.sh
