@@ -3,7 +3,7 @@ FROM ubuntu:xenial
 # Update Packages and Dependencies
 RUN apt update
 RUN apt upgrade -y
-RUN apt install -y software-properties-common dbus
+RUN apt install -y software-properties-common dbus dbus-x11
 
 # Hamachi Instalation
 RUN mkdir /hamachi
