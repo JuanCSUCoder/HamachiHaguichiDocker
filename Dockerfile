@@ -1,9 +1,26 @@
 FROM ubuntu:xenial
 
+# Environment Vars
+ENV DEBIAN_FRONTEND noninteractive
+
 # Update Packages and Dependencies
 RUN apt update
 RUN apt upgrade -y
 RUN apt install -y software-properties-common dbus dbus-x11
+
+# Add Systemd
+RUN apt install -y systemd systemd-sysv
+RUN cd /lib/systemd/system/sysinit.target.wants/ \
+    && ls | grep -v systemd-tmpfiles-setup | xargs rm -f $1
+RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
+    /etc/systemd/system/*.wants/* \
+    /lib/systemd/system/local-fs.target.wants/* \
+    /lib/systemd/system/sockets.target.wants/*udev* \
+    /lib/systemd/system/sockets.target.wants/*initctl* \
+    /lib/systemd/system/basic.target.wants/* \
+    /lib/systemd/system/anaconda.target.wants/* \
+    /lib/systemd/system/plymouth* \
+    /lib/systemd/system/systemd-update-utmp*
 
 # Hamachi Instalation
 RUN mkdir /hamachi
@@ -19,9 +36,4 @@ RUN apt install -y haguichi
 # Configure Haguichi
 RUN echo Ipc.User $USER >> /var/lib/logmein-hamachi/h2-engine-override.cfg
 
-# Add entrypoint.sh and Set Permissions
-COPY entrypoint.sh /hamachi/entrypoint.sh
-RUN chmod a+x /hamachi/entrypoint.sh
-
-ENTRYPOINT [ "/hamachi/entrypoint.sh" ]
-CMD [ "haguichi" ]
+CMD ["/lib/systemd/systemd"]

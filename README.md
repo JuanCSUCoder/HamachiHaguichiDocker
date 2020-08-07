@@ -17,3 +17,9 @@ To run use:
 docker run -d --name="HamachiHaguichi" --privileged="true" -v "/etc/localtime":"/etc/localtime":ro --volume="$HOME/.Xauthority:/root/.Xauthority:rw" --env="DISPLAY" --net=host hamachihaguichi
 ```
 
+To open GUI:
+
+```shell
+docker exec HamachiHaguichi haguichi
+```
+
