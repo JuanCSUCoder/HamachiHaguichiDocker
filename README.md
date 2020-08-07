@@ -8,12 +8,12 @@ To build:
 ```shell
 git clone https://github.com/JCSUCoder/HamachiHaguichiDocker.git
 cd HamachiHaguichiDocker
-docker build . -t HamachiHaguichi
+docker build . -t hamachihaguichi
 ```
 
 To run use:
 
 ```shell
-docker run --volume="$HOME/.Xauthority:/root/.Xauthority:rw" --env="DISPLAY" --net=host HamachiHaguichi
+docker run -d --name="HamachiHaguichi" --privileged="true" -v "/etc/localtime":"/etc/localtime":ro --volume="$HOME/.Xauthority:/root/.Xauthority:rw" --env="DISPLAY" --net=host hamachihaguichi
 ```
 
