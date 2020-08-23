@@ -1,4 +1,4 @@
-# Hamachi + Haguichi in Docker
+# Hamachi + Haguichi in Docker ![GitHub](https://img.shields.io/github/license/JCSUCoder/HamachiHaguichiDocker) ![GitHub forks](https://img.shields.io/github/forks/JCSUCoder/HamachiHaguichiDocker?style=social) ![GitHub stars](https://img.shields.io/github/stars/JCSUCoder/HamachiHaguichiDocker?style=social) 
 Since Hamachi is made for old versions of Ubuntu and CentOS, here is a little workaround to make it work properly on every linux system, with Haguichi as the graphical frontend to use it.
 
 **GUI only works in X server**
