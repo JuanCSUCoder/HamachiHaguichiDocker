@@ -3,6 +3,11 @@ Since Hamachi is made for old versions of Ubuntu and CentOS, here is a little wo
 
 **GUI only works in X server**
 
+To pull:
+```shell
+docker pull juancsucoder/hamachihaguichi
+```
+
 To build:
 
 ```shell
